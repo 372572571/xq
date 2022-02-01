@@ -1,4 +1,4 @@
-package internal
+package xq
 
 type UtilType struct{}
 
