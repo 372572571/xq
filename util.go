@@ -1,6 +1,10 @@
 package xq
 
-type UtilType struct{}
+import xq "github.com/372572571/xq/jwtx"
+
+type UtilType struct{
+	xq.Jwtx
+}
 
 var Util = &UtilType{}
 

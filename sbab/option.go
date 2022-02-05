@@ -1,4 +1,4 @@
-package sbab
+package xq
 
 type options struct {
 	source string
