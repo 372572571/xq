@@ -1,9 +1,8 @@
 package xq
 
-import xq "github.com/372572571/xq/jwtx"
-
-type UtilType struct{
-	xq.Jwtx
+import jwt "github.com/372572571/xq/jwtx"
+type UtilType struct {
+	jwt.Jwtx
 }
 
 var Util = &UtilType{}

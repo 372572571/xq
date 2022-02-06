@@ -1,4 +1,4 @@
-package xq
+package sbab
 
 import (
 	"bytes"
@@ -9,11 +9,22 @@ import (
 	"encoding/hex"
 	"fmt"
 
-	"github.com/372572571/xq"
 	"golang.org/x/crypto/bcrypt"
 )
 
-var defkey = string(xq.Util.MustTake(hex.DecodeString("6368616e67652074686973e070e17323")).([]byte))
+func Keyer(key string) string {
+	str, err := hex.DecodeString(key)
+
+	if err != nil {
+		panic(err)
+	}
+
+	return string(str)
+}
+
+func defkey() string {
+	return Keyer("6368616e67652074686973e070e17323")
+}
 
 type Te struct {
 	opts   options
@@ -24,10 +35,13 @@ type Te struct {
 }
 
 func Check(orig string, cipher string, mask string) bool {
-	var base = xq.Util.MustTake(base64.StdEncoding.DecodeString(cipher)).([]byte)
+	var base, err = base64.StdEncoding.DecodeString(cipher)
+	if err != nil {
+		panic(err)
+	}
 
 	if mask == "" {
-		mask = defkey
+		mask = defkey()
 	}
 
 	var aes = aes_decryption(string(base), mask)
@@ -44,9 +58,11 @@ func Check(orig string, cipher string, mask string) bool {
 func New(optfuncs ...OptFunc) *Te {
 	var te = &Te{}
 	var opts = options{}
+
 	for _, f := range optfuncs {
 		f(&opts)
 	}
+
 	te.opts = opts
 	return te
 }
@@ -64,16 +80,27 @@ func sha_encryption(value string) string {
 }
 
 func bcrypt_encryption(value string) string {
-	var h = xq.Util.MustTake(bcrypt.GenerateFromPassword([]byte(value), bcrypt.DefaultCost)).([]byte)
+	h, err := bcrypt.GenerateFromPassword([]byte(value), bcrypt.DefaultCost)
+	
+	if err != nil {
+		panic(err)
+	}
+
 	return string(h)
 }
 
 // aes cbc
 func aes_encryption(value, key string) string {
 	if key == "" {
-		key = defkey
+		key = defkey()
 	}
-	var block = xq.Util.MustTake(aes.NewCipher([]byte(defkey))).(cipher.Block)
+
+	block, err := aes.NewCipher([]byte(key))
+
+	if err != nil {
+		panic(err)
+	}
+
 	var block_size = block.BlockSize()
 	var p_value = pkcs7padding([]byte(value), block.BlockSize())
 	var block_mode = cipher.NewCBCEncrypter(block, []byte(key)[:block_size])
@@ -84,7 +111,10 @@ func aes_encryption(value, key string) string {
 }
 
 func aes_decryption(value, key string) string {
-	block := xq.Util.MustTake(aes.NewCipher([]byte(key))).(cipher.Block)
+	block, err := aes.NewCipher([]byte(key)) // .(cipher.Block)
+	if err != nil {
+		panic(err)
+	}
 	blockSize := block.BlockSize()
 	blockMode := cipher.NewCBCDecrypter(block, []byte(key)[:blockSize])
 	decryption := make([]byte, len(value))

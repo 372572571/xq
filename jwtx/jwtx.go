@@ -1,4 +1,4 @@
-package xq
+package jwtx
 
 import "github.com/golang-jwt/jwt"
 
