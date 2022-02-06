@@ -16,3 +16,7 @@ func (u *Pwd) Encryption(mask, source string) string {
 func (u *Pwd) Check(mask, in, sou string) bool {
 	return sbab.Check(in,sou,mask)
 }
+
+func (u *Pwd) Keyer(mask  string) string {
+	return sbab.Keyer(mask)
+}

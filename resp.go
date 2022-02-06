@@ -48,6 +48,7 @@ func (self *XqRespUtil) SetRespCode(group Any) {
 			resp := XqResp{
 				Code:    int32(Util.MustTake(strconv.Atoi(code)).(int)),
 				Message: strings.ToUpper(mess + " " + info.Name),
+				Details: []string{},
 			}
 			pair := reflect.ValueOf(resp)
 			elem.FieldByName(info.Name).Set(pair)
@@ -63,4 +64,31 @@ func (self *XqRespUtil) SetRespCode(group Any) {
 		}
 		inject(re, rs, v)
 	}
+}
+
+// 错误信息打包
+func (u *XqRespUtil) Pkg(e XqResp, details ...string) XqResp {
+	var err = new(XqResp)
+	err.Code = e.Code
+	err.Message = e.Message
+	err.Details = []string{}
+
+	if len(details) > 0 {
+		err.Details = append(err.Details, details...)
+	}
+
+	return *err
+}
+
+func (u *XqRespUtil) PkgToString(e XqResp, details ...string) string {
+	var err = new(XqResp)
+	err.Code = e.Code
+	err.Message = e.Message
+	err.Details = []string{}
+
+	if len(details) > 0 {
+		err.Details = append(err.Details, details...)
+	}
+
+	return Json.Marshal(err)
 }

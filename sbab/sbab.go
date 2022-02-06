@@ -22,7 +22,7 @@ func Keyer(key string) string {
 	return string(str)
 }
 
-func defkey() string {
+func Defkey() string {
 	return Keyer("6368616e67652074686973e070e17323")
 }
 
@@ -34,20 +34,16 @@ type Te struct {
 	base   string
 }
 
-func Check(orig string, cipher string, mask string) bool {
+func Check(org string, cipher string, mask string) bool {
 	var base, err = base64.StdEncoding.DecodeString(cipher)
 	if err != nil {
 		panic(err)
 	}
 
-	if mask == "" {
-		mask = defkey()
-	}
-
 	var aes = aes_decryption(string(base), mask)
-	orig = sha_encryption(orig)
+	org = sha_encryption(org)
 
-	ok := bcrypt.CompareHashAndPassword([]byte(aes), []byte(orig))
+	ok := bcrypt.CompareHashAndPassword([]byte(aes), []byte(org))
 	if ok != nil {
 		return false
 	}
@@ -81,7 +77,7 @@ func sha_encryption(value string) string {
 
 func bcrypt_encryption(value string) string {
 	h, err := bcrypt.GenerateFromPassword([]byte(value), bcrypt.DefaultCost)
-	
+
 	if err != nil {
 		panic(err)
 	}
@@ -91,10 +87,6 @@ func bcrypt_encryption(value string) string {
 
 // aes cbc
 func aes_encryption(value, key string) string {
-	if key == "" {
-		key = defkey()
-	}
-
 	block, err := aes.NewCipher([]byte(key))
 
 	if err != nil {
