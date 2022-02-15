@@ -23,9 +23,16 @@ type DefResp struct {
 }
 
 type XqRespUtil struct {
+	Def *DefResp
 }
 
-var RespUtil = &XqRespUtil{}
+var RespUtil = newRespUtil()
+
+func newRespUtil() *XqRespUtil {
+	var resp = &XqRespUtil{Def: new(DefResp)}
+	resp.SetRespCode(resp.Def)
+	return resp
+}
 
 // 设置返回码
 func (self *XqRespUtil) SetRespCode(group Any) {
