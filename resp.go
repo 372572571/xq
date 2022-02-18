@@ -96,6 +96,5 @@ func (u *XqRespUtil) PkgToString(e XqResp, details ...string) string {
 	if len(details) > 0 {
 		err.Details = append(err.Details, details...)
 	}
-
 	return Json.Marshal(err)
 }
