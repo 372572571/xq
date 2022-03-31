@@ -2,6 +2,13 @@ package single
 
 import "github.com/hibiken/asynq"
 
+type Config struct {
+    Enable   bool
+    Addr     string
+    Password string
+    Index    int
+}
+
 type optsions struct {
 	redis  asynq.RedisClientOpt
 	config asynq.Config
@@ -45,13 +52,11 @@ func StrictQueue(value bool) OptFunc {
 }
 
 // 默认配置
-func DefaultConfig(addr string, pwd string) []OptFunc {
+func DefaultConfig() []OptFunc {
 	var funcs = []OptFunc{}
 
 	funcs = append(funcs, func(opt optsions) {
-		opt.redis.Addr = addr
-		opt.redis.Password = pwd
-		opt.config.Concurrency = 5
+		opt.config.Concurrency = 1
 		opt.config.Queues = map[string]int{
 			"up":      3,
 			"default": 2,

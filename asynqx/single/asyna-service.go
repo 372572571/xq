@@ -5,7 +5,7 @@ import (
 )
 
 type IAsynqSingle interface {
-	// NewServeMux() *asynq.ServeMux
+	NewServeMux() *asynq.ServeMux
 	Server() *asynq.Server
 }
 
@@ -14,13 +14,16 @@ type asynqs struct {
 	opt    *optsions
 }
 
-func NewAsynqxServer(opts ...OptFunc) IAsynqSingle {
-
+func NewAsynqxServer(config Config, opts ...OptFunc) IAsynqSingle {
 	var opt = &optsions{
 		redis:  asynq.RedisClientOpt{},
 		config: asynq.Config{},
 	}
 
+	opt.redis.Addr     = config.Addr
+	opt.redis.Password = config.Password
+	opt.redis.DB       = config.Index
+	
 	for _, v := range opts {
 		v(*opt)
 	}

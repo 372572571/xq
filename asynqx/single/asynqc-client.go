@@ -1,6 +1,10 @@
 package single
 
-import "github.com/hibiken/asynq"
+import (
+	"fmt"
+
+	"github.com/hibiken/asynq"
+)
 
 type IAsynqc interface {
 	Client() *asynq.Client
@@ -11,13 +15,19 @@ type asynqc struct {
 	opt    *optsions
 }
 
-func NewClient(funcs ...OptFunc) IAsynqc {
+func NewClient(config Config, funcs ...OptFunc) IAsynqc {
 	var c = &asynqc{}
 	c.opt = &optsions{redis: asynq.RedisClientOpt{}}
+
+	c.opt.redis.Addr     = config.Addr
+	c.opt.redis.DB       = config.Index
+	c.opt.redis.Password = config.Password
 
 	for _, f := range funcs {
 		f(*c.opt)
 	}
+
+	fmt.Println(c.opt.redis)
 
 	c.client = asynq.NewClient(c.opt.redis)
 
