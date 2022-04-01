@@ -5,7 +5,7 @@ import "github.com/372572571/xq/database"
 type IRepo interface {
 	TableName() string                   // model name
 	Empty() interface{}                  // model{}
-	EmptyList() []interface{}            // []model
+	EmptyList() interface{}            // []model
 	Primary(key interface{}) interface{} // {ID:id}
 }
 
@@ -67,7 +67,7 @@ func (r *BaseRepo) Update(data interface{}, where ...func(*database.Database) *d
 	return db.RowsAffected()
 }
 
-func (r *BaseRepo) Find(m map[string]interface{}) []interface{} {
+func (r *BaseRepo) Find(m map[string]interface{}) interface{} {
 	list := r.repo.EmptyList()
 	r.db.Table(r.repo).Parse(m).Scan(&list)
 	return list
