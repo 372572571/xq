@@ -7,6 +7,7 @@ import (
 	"strings"
 
 	"github.com/372572571/commpb"
+	"github.com/372572571/xq/lang"
 )
 
 type XqResp = commpb.Status
@@ -35,10 +36,10 @@ func newRespUtil() *XqRespUtil {
 }
 
 // 设置返回码
-func (self *XqRespUtil) SetRespCode(group Any) {
-	var inject func(re, rs *regexp.Regexp, group Any)
+func (self *XqRespUtil) SetRespCode(group lang.Any) {
+	var inject func(re, rs *regexp.Regexp, group lang.Any)
 
-	inject = func(re, rs *regexp.Regexp, group Any) {
+	inject = func(re, rs *regexp.Regexp, group lang.Any) {
 		elem := reflect.Indirect(reflect.ValueOf(group))
 		data := reflect.TypeOf(elem.Interface())
 
@@ -65,7 +66,7 @@ func (self *XqRespUtil) SetRespCode(group Any) {
 	re := Util.MustTake(regexp.Compile("[[:digit:]]+")).(*regexp.Regexp)
 	rs := Util.MustTake(regexp.Compile("[a-z]+")).(*regexp.Regexp)
 
-	for _, v := range []Any{group} {
+	for _, v := range []lang.Any{group} {
 		if v == nil {
 			continue
 		}

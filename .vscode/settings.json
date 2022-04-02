@@ -1,4 +1,5 @@
 {
     "commentTranslate.targetLanguage": "en",
-    "commentTranslate.source": "Baidu"
+    "commentTranslate.source": "Baidu",
+    "go.testFlags": ["-v"],
 }
