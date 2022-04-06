@@ -1,18 +1,20 @@
 package main
 
 import (
+	"bytes"
 	"fmt"
-	"time"
+
+	"github.com/372572571/xq/jsonx"
 )
 
-func main() {
-	t := &time.Time{}
-	t2 := &time.Time{}
-	fmt.Println(t)
-	fmt.Printf("%p \n",t)
-	fmt.Printf("%p \n",t2)
-	fmt.Println((*time.Time)(t))
-}
+// func main() {
+// 	t := &time.Time{}
+// 	t2 := &time.Time{}
+// 	fmt.Println(t)
+// 	fmt.Printf("%p \n",t)
+// 	fmt.Printf("%p \n",t2)
+// 	fmt.Println((*time.Time)(t))
+// }
 
 // func main() {
 // 	data := make(chan bool, 2)
@@ -30,3 +32,15 @@ func main() {
 // 	fmt.Println(3)
 // 	fmt.Println("over")
 // }
+
+type data struct {
+	Value int64
+}
+
+func main() {
+	// js := "{value:123}"
+	var resp = bytes.NewBufferString("")
+	v := &data{Value: 1235}
+	jsonx.Marshal(&v, resp)
+	fmt.Println(resp)
+}
