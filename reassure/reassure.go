@@ -1,8 +1,6 @@
 package reassure
 
-import (
-	"fmt"
-)
+import "log"
 
 // 捕获
 func Reassure(fns ...func()) {
@@ -11,6 +9,6 @@ func Reassure(fns ...func()) {
 	}
 
 	if err := recover(); err != nil {
-		fmt.Println("[error]", err)
+		log.Default().Println(err)
 	}
 }

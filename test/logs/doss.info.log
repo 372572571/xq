@@ -1,0 +1,14 @@
+2022-04-07 17:37:49	ERROR	test/main.go:53	test error
+2022-04-07 17:37:49	WARN	test/main.go:55	test warnf
+2022-04-07 17:37:49	INFO	test/main.go:57	test infof
+2022-04-07 17:37:51	DPANIC	test/main.go:49	error
+main.logtest.func1
+	/home/lyld/src/git/xq/test/main.go:49
+runtime.gopanic
+	/usr/lib/go-1.17/src/runtime/panic.go:1038
+main.logtest
+	/home/lyld/src/git/xq/test/main.go:61
+main.main
+	/home/lyld/src/git/xq/test/main.go:41
+runtime.main
+	/usr/lib/go-1.17/src/runtime/proc.go:255

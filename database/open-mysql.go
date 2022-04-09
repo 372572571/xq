@@ -15,7 +15,7 @@ func Open(config Config, models ...interface{}) *Database {
 
 	var open = func(tag string, name string, list []Server) []gorm.Dialector {
 		var dialectors = []gorm.Dialector{}
-		for i,          v := range list {
+		for i, v := range list {
 			var dsn = fmt.Sprintf("%s:%s@tcp(%s:%d)/%s?%s", []interface{}{
 				v.User,
 				v.Pwd,
@@ -30,7 +30,7 @@ func Open(config Config, models ...interface{}) *Database {
 		return dialectors
 	}
 	var data = dbresolver.Config{
-		Sources : open("source", config.Name, config.Source),
+		Sources:  open("source", config.Name, config.Source),
 		Replicas: open("replica", config.Name, config.Replica),
 	}
 
@@ -43,6 +43,10 @@ func Open(config Config, models ...interface{}) *Database {
 
 	if err = db.AutoMigrate(models...); err != nil {
 		fmt.Printf("%v", err)
+	}
+
+	if config.Debug {
+		return &Database{impl: db.Debug()}
 	}
 
 	return &Database{impl: db}

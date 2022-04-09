@@ -9,6 +9,7 @@ type Server struct {
 
 type Config struct {
 	Enable  bool
+	Debug   bool
 	Name    string
 	Source  []Server
 	Replica []Server
