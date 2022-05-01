@@ -1,6 +1,8 @@
 package reassure
 
-import "log"
+import (
+	"github.com/372572571/xq/logx"
+)
 
 // 捕获
 func Reassure(fns ...func()) {
@@ -9,6 +11,6 @@ func Reassure(fns ...func()) {
 	}
 
 	if err := recover(); err != nil {
-		log.Default().Println(err)
+		logx.Error(err)
 	}
 }

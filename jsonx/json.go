@@ -19,10 +19,14 @@ func MarshalString(v interface{}) string {
 }
 
 // str_io bytes.NewBufferString("")
-func Marshal(v interface{}, str_io io.Writer) error {
+func MarshalEX(v interface{}, str_io io.Writer) error {
 	encoder := json.NewEncoder(str_io)
 	err := encoder.Encode(v)
 	return err
+}
+
+func Marshal(v interface{}) ([]byte, error) {
+	return json.Marshal(v)
 }
 
 func MarshalByte(v interface{}) []byte {

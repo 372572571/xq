@@ -7,7 +7,6 @@ import (
 	"gorm.io/gorm"
 )
 
-
 type Database struct {
 	impl *gorm.DB
 }
@@ -69,6 +68,10 @@ func (db *Database) Exec(sql string, values ...interface{}) *Database {
 	return &Database{impl: db.impl.Exec(sql, values...)}
 }
 
+func (db *Database) Unscoped() *Database {
+	return &Database{impl: db.impl.Unscoped()}
+}
+
 func (db *Database) Raw(sql string, values ...interface{}) *Database {
 	return &Database{impl: db.impl.Raw(sql, values...)}
 }
@@ -80,6 +83,11 @@ func (db *Database) Packsafe(g *gorm.DB) *Database {
 
 func (db *Database) Table(i interface{ TableName() string }) *Database {
 	return &Database{impl: db.impl.Table(i.TableName())}
+}
+
+func (db *Database) Save(value interface{}) *Database {
+
+	return &Database{impl: db.impl.Save(value)}
 }
 
 func (db *Database) Parse(data map[string]interface{}) *Database {

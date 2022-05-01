@@ -5,7 +5,9 @@ go 1.16
 require (
 	github.com/372572571/commpb v0.0.3
 	github.com/golang-jwt/jwt v3.2.2+incompatible
+	github.com/gomodule/redigo v1.8.8
 	github.com/hibiken/asynq v0.22.1
+	github.com/jinzhu/gorm v1.9.16
 	github.com/natefinch/lumberjack v2.0.0+incompatible
 	go.uber.org/atomic v1.9.0 // indirect
 	go.uber.org/multierr v1.8.0 // indirect
@@ -15,6 +17,6 @@ require (
 	golang.org/x/sys v0.0.0-20220209214540-3681064d5158 // indirect
 	gopkg.in/natefinch/lumberjack.v2 v2.0.0 // indirect
 	gorm.io/driver/mysql v1.3.2
-	gorm.io/gorm v1.23.3
+	gorm.io/gorm v1.23.4
 	gorm.io/plugin/dbresolver v1.1.0
 )
